@@ -13,14 +13,11 @@ class CurrencySeeder extends Seeder
      */
     public function run(): void
     {
-        $currencies = ['USD', 'EUR', 'GBP', 'CHF', 'PLN'];
-
-        foreach ($currencies as $currency) {
+        foreach (config('app_info.currencies') as $currency) {
             DB::table('currencies')->insert([
                 'code' => $currency,
                 'title' => $currency
             ]);
         }
-
     }
 }
