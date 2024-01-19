@@ -8,5 +8,6 @@ return [
         12, // Укрсиббанк
         15, // Таскомбанк
         36, // Кредобанк
-    ]
+    ],
+    'bank_endpoint' => 'https://finance.ua/banks/api/organizationsList?locale=uk'
 ];

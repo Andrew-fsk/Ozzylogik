@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('banks', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->json('logo')->nullable();
             $table->string('site')->nullable();
@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('legal_address')->nullable();
             $table->float('rating')->default(0);
+            $table->integer('api_id')->unique();
             $table->timestamps();
         });
     }
