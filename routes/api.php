@@ -18,6 +18,9 @@ Route::get('/currencies', 'App\Http\Controllers\CurrenciesController@index');
 Route::get('/banks', 'App\Http\Controllers\BankController@index');
 Route::get('/banks/{id}', 'App\Http\Controllers\BankController@show');
 
+Route::get('/branches/nearby/{latitude}/{longitude}/{bankId?}', 'App\Http\Controllers\BranchController@getNearestBranches')
+    ->where(['latitude' => '[-]?[0-9]+(\.[0-9]+)?', 'longitude' => '[-]?[0-9]+(\.[0-9]+)?']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

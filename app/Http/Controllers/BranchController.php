@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BranchResource;
 use App\Models\Bank;
 use App\Models\Branch;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class BranchController extends Controller
 {
-    public function updateBranchData()
+
+    public function getNearestBranches(Request $request, $latitude, $longitude, $bankId = null): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    {
+        return BranchResource::collection(Branch::getNearestBranches($latitude, $longitude, $bankId));
+    }
+
+
+
+    public function updateBranchData(): void
     {
         $banks = Bank::all();
         foreach ($banks as $bank) {
@@ -20,7 +29,7 @@ class BranchController extends Controller
         }
     }
 
-    private function callBranchApi(string $slug, int $bank_id)
+    private function callBranchApi(string $slug, int $bank_id): ?array
     {
         try {
             $response = Http::get(config('app_info.branch_endpoint') . $slug);
