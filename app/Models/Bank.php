@@ -24,4 +24,9 @@ class Bank extends Model
     protected $casts = [
         'logo' => 'array'
     ];
+
+    public function branches()
+    {
+        return $this->hasMany(Branch::class, 'bank_id', 'id');
+    }
 }

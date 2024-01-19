@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/currencies', 'App\Http\Controllers\CurrenciesController@index');
+Route::get('/banks', 'App\Http\Controllers\BankController@index');
+Route::get('/banks/{id}', 'App\Http\Controllers\BankController@show');
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

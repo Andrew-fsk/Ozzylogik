@@ -2,11 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BankResource;
+use App\Http\Resources\BankSingleResource;
 use App\Models\Bank;
 use Illuminate\Support\Facades\Http;
 
 class BankController extends Controller
 {
+    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    {
+        $banks = Bank::all();
+        return BankResource::collection($banks);
+    }
+
+    public function show($id): BankSingleResource
+    {
+        $bank = Bank::findOrFail($id);
+        return new BankSingleResource($bank);
+    }
+
+
     public function updateBankData(): \Illuminate\Http\JsonResponse
     {
         $banks = Bank::all();
