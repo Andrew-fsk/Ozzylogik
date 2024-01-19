@@ -9,5 +9,6 @@ return [
         15, // Таскомбанк
         36, // Кредобанк
     ],
-    'bank_endpoint' => 'https://finance.ua/banks/api/organizationsList?locale=uk'
+    'bank_endpoint' => 'https://finance.ua/banks/api/organizationsList?locale=uk',
+    'branch_endpoint' => 'https://finance.ua/api/organization/v1/branches?locale=uk&slug=',
 ];

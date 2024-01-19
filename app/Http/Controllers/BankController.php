@@ -15,7 +15,8 @@ class BankController extends Controller
         foreach ($banks as $bank) {
             $bank->update([
                 'title' => $api_data[$bank->api_id]['title'],
-                'description' => $api_data[$bank->api_id]['attributes']['aboutText'],
+                'slug' => $api_data[$bank->api_id]['slug'],
+                'description' => $api_data[$bank->api_id]['attributes']['aboutText'] ?? '',
                 'logo' => $api_data[$bank->api_id]['logo'],
                 'site' => $api_data[$bank->api_id]['site'],
                 'phone' => $api_data[$bank->api_id]['phone'],

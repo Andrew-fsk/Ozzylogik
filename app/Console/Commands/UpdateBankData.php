@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\BranchController;
 use Illuminate\Console\Command;
 
 class UpdateBankData extends Command
@@ -27,6 +28,7 @@ class UpdateBankData extends Command
     public function handle()
     {
         app(BankController::class)->updateBankData();
+        app(BranchController::class)->updateBranchData();
 
         $this->info('Bank data updated successfully.');
     }

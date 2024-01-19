@@ -5,23 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Bank extends Model
+class Branch extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'slug',
-        'description',
-        'logo',
-        'site',
+        'name',
+        'bank_id',
+        'address',
+        'lat',
+        'lng',
         'phone',
         'email',
-        'legal_address',
-        'rating'
-    ];
-
-    protected $casts = [
-        'logo' => 'array'
+        'api_id',
     ];
 }
