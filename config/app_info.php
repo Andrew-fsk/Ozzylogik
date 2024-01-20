@@ -11,4 +11,5 @@ return [
     ],
     'bank_endpoint' => 'https://finance.ua/banks/api/organizationsList?locale=uk',
     'branch_endpoint' => 'https://finance.ua/api/organization/v1/branches?locale=uk&slug=',
+    'nbu_currencies_endpoint' => 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
 ];
