@@ -35,7 +35,7 @@ class Bank extends Model
         return $this->hasMany(BankExchangeRate::class, 'bank_id', 'id');
     }
 
-    private function getRate(string $type, int $currency_id): Model|\Illuminate\Database\Eloquent\Relations\HasMany|null
+    public function getRate(string $type, int $currency_id): Model|\Illuminate\Database\Eloquent\Relations\HasMany|null
     {
         return $this->rates()
             ->where('type', $type)
@@ -52,7 +52,7 @@ class Bank extends Model
             $currencyCode = $currency->code;
             $latestCardRate = $this->getRate('card', $currency->id);
             $latestCashRate = $this->getRate('cash', $currency->id);
-            $formattedRates[$currencyCode]['id'] = $currency->id;
+            $formattedRates[$currencyCode]['currency_id'] = $currency->id;
 
             if ($latestCardRate) {
                 $formattedRates[$currencyCode]['card'] = $this->getFormattedRate($latestCardRate);
@@ -74,7 +74,7 @@ class Bank extends Model
     protected function getFormattedRate($rate): array
     {
         return [
-            'date' => $rate->created_at->toIso8601String(),
+            'date' => $rate->created_at,
             'bid' => $rate->bid,
             'ask' => $rate->ask,
         ];

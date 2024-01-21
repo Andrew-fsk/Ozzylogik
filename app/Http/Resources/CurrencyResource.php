@@ -14,6 +14,15 @@ class CurrencyResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'code' => $this->code,
+            'title' => $this->title,
+            'nbu_rate' => [
+                'rate' => $this->getLastNbuRate()->rate,
+                'created_at' => $this->getLastNbuRate()->created_at,
+            ],
+            'middle_bank_rate' => $this->getMiddleBankRate()
+        ];
     }
 }
