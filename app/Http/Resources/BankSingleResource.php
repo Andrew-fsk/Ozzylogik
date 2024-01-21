@@ -15,6 +15,7 @@ class BankSingleResource extends BankResource
     {
         $resourse = parent::toArray($request);
         $resourse['branches'] = BranchResource::collection($this->branches);
+        $resourse['currencies'] = $this->getExchangeRates();
         return $resourse;
     }
 }

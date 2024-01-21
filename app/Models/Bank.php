@@ -25,8 +25,59 @@ class Bank extends Model
         'logo' => 'array'
     ];
 
-    public function branches()
+    public function branches(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Branch::class, 'bank_id', 'id');
     }
+
+    public function rates(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(BankExchangeRate::class, 'bank_id', 'id');
+    }
+
+    private function getRate(string $type, int $currency_id): Model|\Illuminate\Database\Eloquent\Relations\HasMany|null
+    {
+        return $this->rates()
+            ->where('type', $type)
+            ->where('currency_id', $currency_id)
+            ->orderByDesc('created_at')
+            ->first();
+    }
+
+    public function getExchangeRates(): array
+    {
+        $formattedRates = [];
+
+        foreach (Currency::all() as $currency) {
+            $currencyCode = $currency->code;
+            $latestCardRate = $this->getRate('card', $currency->id);
+            $latestCashRate = $this->getRate('cash', $currency->id);
+            $formattedRates[$currencyCode]['id'] = $currency->id;
+
+            if ($latestCardRate) {
+                $formattedRates[$currencyCode]['card'] = $this->getFormattedRate($latestCardRate);
+            } else {
+                $formattedRates[$currencyCode]['card'] = null;
+            }
+
+            if ($latestCashRate) {
+                $formattedRates[$currencyCode]['cash'] = $this->getFormattedRate($latestCashRate);
+            } else {
+                $formattedRates[$currencyCode]['cash'] = null;
+            }
+
+        }
+
+        return $formattedRates;
+    }
+
+    protected function getFormattedRate($rate): array
+    {
+        return [
+            'date' => $rate->created_at->toIso8601String(),
+            'bid' => $rate->bid,
+            'ask' => $rate->ask,
+        ];
+    }
+
 }
